@@ -3,6 +3,8 @@ package com.iris.newjoiner.controller;
 import com.iris.newjoiner.model.Employee;
 import com.iris.newjoiner.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,11 +42,16 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
-        employeeService.delete(id);
+    public ResponseEntity delete(@PathVariable int id) {
+        try {
+            employeeService.delete(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
-    @GetMapping("/type")
+    @GetMapping("/type/{type}")
     public List<Employee> getEmployeeByType(@PathVariable String type) {
         if (type != null && type.equalsIgnoreCase("manager"))
             return employeeService.getAllManagers();

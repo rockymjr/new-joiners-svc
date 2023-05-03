@@ -30,7 +30,7 @@ public class EmployeeService {
     }
 
     public List<Employee> getAllHrSpocs() {
-        return employeeRepository.findByIsHrSpocsTrue();
+        return employeeRepository.findByIsHRSpocsTrue();
     }
 
     public List<Employee> getAllManagers() {
